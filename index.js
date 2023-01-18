@@ -18,8 +18,9 @@ function getBooks(data){
           </div>`
         }).join("")
         container.innerHTML=arrayOfBooks
-        addToCart()
         hideTheCard()
+        addToCart()
+        
         
 }
 
@@ -80,17 +81,22 @@ function addToCart(){
     btns.forEach(btn => {
         btn.addEventListener("click",function(){
             let card=btn.closest('.card')
-            let cardTitle=card.childNodes[3].childNodes[1].innerHTML
-            let ul=document.getElementById('ul')
-            let liNode=document.createElement('li')
-            liNode.innerText=cardTitle
-            liNode.style.borderTop="1px solid black"
-          
-            ul.appendChild(liNode)
+            let where=document.querySelector('.modal-body')
+           //btn.innerHTML=`<i class="bi bi-check-lg"></i>Added`
+           //btn.classList.replace("btn-outline-dark","btn-outline-success")
+            where.innerHTML+=`<div class="d-flex justify-content-between mb-3">
+             <li class="title">${card.childNodes[3].childNodes[1].innerHTML}</li>
+            <button type="button" class="btn btn-outline-danger deleteBtn" >Delete</button>
+            </div>`
+        
           
             list.push(card)
             card.style.position="relative"
             btn.closest('.card').innerHTML+=`<span class="badge badge-danger position-absolute">Added to cart</span>`
+
+        
+            deleteFromCart()
+        
         })
     });
     console.log(list)
@@ -101,8 +107,10 @@ function hideTheCard(){
     let btns=document.querySelectorAll('.hide')
     btns.forEach(btn=>{
         btn.addEventListener("click",function(){
-            btn.closest('.card').remove()
-            //style.display="none"
+            let cardToRemove=btn.closest('.card')
+            let parent=cardToRemove.parentNode
+           
+            parent.remove()
         })
     })
 }
@@ -110,4 +118,45 @@ function hideTheCard(){
 
 
 
- 
+ function deleteFromCart(){
+    let btns=document.querySelectorAll('.deleteBtn')
+    btns.forEach(btn => {
+        btn.addEventListener("click", function(){
+
+            let title=btn.previousElementSibling.innerText
+            //console.log(title)
+            let cardtitles=document.querySelectorAll('.card-title')
+            //console.log(cardtitles)
+          for(i=0;i<cardtitles.length;i++){
+            if(cardtitles[i].innerText===title){
+                //console.log(cardtitles[i].innerText)
+                let something=cardtitles[i].parentElement.parentElement.childNodes
+             
+                something[5].remove();
+                
+
+               
+            }
+          }
+
+            btn.closest('div').remove()
+         
+           })
+    });
+   
+
+ }
+
+ function emptyCart(){
+    let btn=document.getElementById('empty')
+    let cartNode=document.getElementsByClassName('modal-body')[0];
+    btn.addEventListener("click",function(){
+      
+     cartNode.remove()
+    })
+ }
+ emptyCart()
+
+//  function counter(){
+//     let where=document.querySelector('.count')
+//  }
