@@ -26,18 +26,21 @@ const getBooks=async()=>{
     }
 
 }
-
+window.onload=()=>{
 getBooks()
+}
+
 
 
 function addToCart(){
 
-let btns=document.getElementsByClassName('cart')
+        let btns=document.querySelectorAll('.cart')
+        console.log(btns)
 //console.log(btns)
-btns.forEach(btn => {
-    
-    btn.closest('.card').innerHTML+=`<span class="badge badge-danger">Added to cart</span>`
-});
+//btns.forEach((btn) => {
+    //console.log(btn)
+    //btn.closest('.card').innerHTML+=`<span class="badge badge-danger">Added to cart</span>`
+//});
  
    
 }
